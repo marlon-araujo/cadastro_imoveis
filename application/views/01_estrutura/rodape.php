@@ -8,6 +8,14 @@
     <script src="<?= base_url('assets/js/misc.js') ?>"></script>
     <script src="<?= base_url('assets/js/dashboard.js') ?>"></script>
     <script src="<?= base_url('assets/js/todolist.js') ?>"></script>
+    <script src="<?= base_url('assets/plugins/formValidation/formValidation.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/formValidation/framework/bootstrap.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/formValidation/language/pt_BR.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/sweetalert/sweetalert.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/jquery.toast/jquery.toast.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/toastr/toastr.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/plugins/accounting/accounting.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/paginas/geral.js'); ?>"></script>
     <?php
     if (!empty($js_link)) {
         foreach ($js_link as $cada) { ?>
