@@ -28,7 +28,9 @@
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     <tr>
+                                        <th>Tipo Imóvel</th>
                                         <th>Descrição</th>
+                                        <th>Tipo Campo</th>
                                         <th>Ações</th>
                                     </tr>
                                     </thead>
@@ -36,12 +38,15 @@
                                         <?php if(!empty($consulta)){
                                             foreach($consulta as $cada){ 
                                                 
-                                                $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_tpi'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                                                $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_tpi'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
+                                                $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_esp'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                                                $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_esp'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
+                                                $tipo = $cada['descricao_tpi'] == 0 ? 'Sim/Não' : 'Campo Livre';
                                                 ?>
                                                 <tr>
-                                                    <td class='col_nome_<?= $cada["codigo_tpi"] ?>'><?= $cada["descricao_tpi"] ?></td>
+                                                    <td><?= $cada['descricao_tpi'] ?></td>
+                                                    <td class='col_nome_<?= $cada["codigo_esp"] ?>'><?= $cada["descricao_esp"] ?></td>
+                                                    <td><?= $tipo ?></td>
                                                     <td><?= $alterar . $excluir ?></td>
                                                 </tr>
                                         <?php } } ?>
@@ -69,12 +74,35 @@
             <form id="form-modal-cadastro" action="<?= base_url($tabela . '/salvar') ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                 <div class="modal-body">
 
-                    <input type="hidden" name="codigo_tpi" id="codigo_tpi" value="0" />
+                    <input type="hidden" name="codigo_esp" id="codigo_esp" value="0" />
                 
                     <div class="form-group">
-                        <?php $campo = "descricao_tpi"; ?>
+                        <?php $campo = "codigo_tpi"; ?>
+                        <label for="<?= $campo ?>" class="control-label">Tipo Imóvel:</label>
+                        <select class="form-control" name="<?= $campo ?>" id="<?= $campo ?>">
+                        <?php if(!empty($tipos_imoveis)){ ?>
+                            <option value="0">Selecione</option>
+                            <?php foreach($tipos_imoveis as $cada){ ?>
+                                <option value="<?= $cada[$campo] ?>"><?= $cada['descricao_tpi'] ?></option>
+                        <?php } }else{ ?>
+                            <option value="0">Cadastre um tipo</option>
+                        <?php } ?>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <?php $campo = "descricao_esp"; ?>
                         <label for="<?= $campo ?>" class="control-label">Descrição:</label>
                         <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <?php $campo = "tipo_esp"; ?>
+                        <label for="<?= $campo ?>" class="control-label">Tipo Campo:</label>
+                        <select class="form-control" name="<?= $campo ?>" id="<?= $campo ?>">
+                            <option value="0">Sim/Não</option>
+                            <option value="1">Campo Livre</option>
+                        </select>
                     </div>
                 
                 </div>

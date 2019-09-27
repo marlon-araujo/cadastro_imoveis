@@ -25,6 +25,7 @@ class Especificacoes extends CI_Controller {
         $data["nome_pagina"] = $this->nome_pagina;
 
         $data["consulta"] = $this->crud->buscar('*', $this->tabela, 'ativo_' . $this->prefixo . ' = 1');
+        $data["tipos_imoveis"] = $this->crud->buscar('*', 'tipo_imovel', 'ativo_tpi = 1', 'descricao_tpi ASC');
 
 		$this->load->view('01_estrutura/cabecalho');
 		$this->load->view('03_cadastros/' . $this->tabela, $data);

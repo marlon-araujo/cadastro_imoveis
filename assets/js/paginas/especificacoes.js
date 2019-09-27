@@ -3,7 +3,7 @@ var pagina = $("#pagina").val();
 $(document).ready(function(){
 
     $("#btn-novo").click(function(){
-        $("#codigo_tpi").val(0);
+        $("#codigo_esp").val(0);
         $('#form-modal-cadastro').formValidation('resetForm', true);
         $("#modal-cadastro").modal('show');
     });
@@ -17,7 +17,7 @@ $(document).ready(function(){
                 validating: 'fa fa-trash-o'
             },
             fields: {
-                descricao_tpi: {
+                descricao_esp: {
                     validators: {
                         notEmpty: {
                             message: 'campo obrigatório'
@@ -66,7 +66,7 @@ $(document).ready(function(){
 $(document).on('click', '.btn-alterar', function(){
     mostrar_carregando();
     var codigo = $(this).data('codigo');
-    $("#codigo_tpi").val(codigo);
+    $("#codigo_esp").val(codigo);
     buscar_registro(codigo);
 });
 
@@ -169,11 +169,11 @@ function monta_tabela(dados){
             html = "";
 
             for (var i = 0; i < tam; i++) {
-                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_tpi + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_tpi + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
+                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
                 html += "<tr>" +
-                            "<td class='col_nome_" + dados[i].codigo_tpi + "'>" + dados[i].descricao_tpi + "</td>" +
+                            "<td class='col_nome_" + dados[i].codigo_esp + "'>" + dados[i].descricao_esp + "</td>" +
                             "<td>" + alterar + excluir + "</td>" +
                         "</tr>";
             }
@@ -183,6 +183,6 @@ function monta_tabela(dados){
 }
 
 function preenche_campos(dados){
-    $("#codigo_tpi").val(dados[0].codigo_tpi);
-    $("#descricao_tpi").val(dados[0].descricao_tpi);
+    $("#codigo_esp").val(dados[0].codigo_esp);
+    $("#descricao_esp").val(dados[0].descricao_esp);
 }
