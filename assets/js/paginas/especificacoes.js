@@ -4,6 +4,8 @@ $(document).ready(function(){
 
     $("#btn-novo").click(function(){
         $("#codigo_esp").val(0);
+        $("#codigo_tpi").val(0);
+        $("#tipo_esp").val(0);
         $('#form-modal-cadastro').formValidation('resetForm', true);
         $("#modal-cadastro").modal('show');
     });
@@ -172,8 +174,12 @@ function monta_tabela(dados){
                 var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
                 var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
+                var tipo = parseInt(dados[i].tipo_esp) === 0 ? "Sim/Não" : "Campo Livre";
+
                 html += "<tr>" +
+                            "<td>" + dados[i].descricao_tpi + "</td>" +
                             "<td class='col_nome_" + dados[i].codigo_esp + "'>" + dados[i].descricao_esp + "</td>" +
+                            "<td>" + tipo + "</td>" +
                             "<td>" + alterar + excluir + "</td>" +
                         "</tr>";
             }
@@ -184,5 +190,7 @@ function monta_tabela(dados){
 
 function preenche_campos(dados){
     $("#codigo_esp").val(dados[0].codigo_esp);
+    $("#codigo_tpi").val(dados[0].codigo_tpi);
     $("#descricao_esp").val(dados[0].descricao_esp);
+    $("#tipo_esp").val(dados[0].tipo_esp);
 }

@@ -41,7 +41,7 @@
                                                 $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_esp'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
                                                 $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_esp'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
-                                                $tipo = $cada['descricao_tpi'] == 0 ? 'Sim/Não' : 'Campo Livre';
+                                                $tipo = $cada['tipo_esp'] == 0 ? 'Sim/Não' : 'Campo Livre';
                                                 ?>
                                                 <tr>
                                                     <td><?= $cada['descricao_tpi'] ?></td>

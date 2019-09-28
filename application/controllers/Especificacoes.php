@@ -24,7 +24,7 @@ class Especificacoes extends CI_Controller {
         $data["tabela"] = $this->tabela;
         $data["nome_pagina"] = $this->nome_pagina;
 
-        $data["consulta"] = $this->crud->buscar('*', $this->tabela, 'ativo_' . $this->prefixo . ' = 1');
+        $data["consulta"] = $this->crud->buscar('x.*, t.descricao_tpi', $this->tabela . ' x', 'x.ativo_' . $this->prefixo . ' = 1', '', ['tabela' => 'tipo_imovel t', 'condicao' => 't.codigo_tpi = x.codigo_tpi', 'tipo' => 'inner']);
         $data["tipos_imoveis"] = $this->crud->buscar('*', 'tipo_imovel', 'ativo_tpi = 1', 'descricao_tpi ASC');
 
 		$this->load->view('01_estrutura/cabecalho');
@@ -73,7 +73,7 @@ class Especificacoes extends CI_Controller {
         $condicao = $this->input->post('condicao');
         $valor = $this->input->post('valor');
 
-        $query  = "SELECT * FROM " . $this->tabela . " WHERE ativo_" . $this->prefixo . " = 1";
+        $query  = "SELECT x.*, t.descricao_tpi FROM " . $this->tabela . " x INNER JOIN tipo_imovel t ON t.codigo_tpi = x.codigo_tpi WHERE x.ativo_" . $this->prefixo . " = 1";
         $query .= $condicao == "" ? "" : " AND " . $condicao . " like '%" . $valor . "%'";
 
         $dados = $this->crud->busca_livre($query);
