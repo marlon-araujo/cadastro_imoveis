@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Especificacoes extends CI_Controller {
+class Imovel extends CI_Controller {
 
-    private $nome_pagina = "Especificações";
-    private $tabela = "especificacoes";
-    private $prefixo = "esp";
+    private $nome_pagina = "Imóvel";
+    private $tabela = "imovel";
+    private $prefixo = "imo";
 
     function __construct() {
         parent::__construct();
