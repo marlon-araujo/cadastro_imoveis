@@ -86,8 +86,20 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6">
+                                <div class="form-group row">
+                                    <?php $campo = "sobrenome_pes"; ?>
+                                    <label for="<?= $campo ?>" class="control-label text-left col-md-3">Sobrenome</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group row">
                                     <?php $campo = "telefone_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Telefone</label>
@@ -96,10 +108,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group row">
                                     <?php $campo = "email_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">E-mail</label>
@@ -109,7 +119,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group row">
                                     <?php $campo = "data_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-6">Data Nascimento</label>
@@ -138,7 +148,7 @@
                                     <?php $campo = "logradouro_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Logradouro</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                                        <input type="text" class="form-control logradouro" name="<?= $campo ?>" id="<?= $campo ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +160,7 @@
                                     <?php $campo = "numero_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Nº</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                                        <input type="text" class="form-control numero" name="<?= $campo ?>" id="<?= $campo ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +170,7 @@
                                     <?php $campo = "bairro_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Bairro</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                                        <input type="text" class="form-control bairro" name="<?= $campo ?>" id="<?= $campo ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +182,7 @@
                                     <?php $campo = "complemento_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Complemento</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
+                                        <input type="text" class="form-control complemento" name="<?= $campo ?>" id="<?= $campo ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +194,7 @@
                                     <?php $campo = "codigo_est"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Estado</label>
                                     <div class="col-md-9">
-                                        <select class="form-control custom-select" name="<?= $campo ?>" id="<?= $campo ?>">
+                                        <select class="form-control custom-select estado" name="<?= $campo ?>" id="<?= $campo ?>">
                                             <option value="0">Selecione</option>
                                             <?php foreach($estados as $estado){ ?>
                                                 <option value="<?= $estado["uf_est"] ?>" <?= ($estado["uf_est"] == "SP" ? 'selected' : '') ?>><?= $estado["nome_est"] ?></option>
@@ -199,7 +209,7 @@
                                     <?php $campo = "codigo_cid"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Cidade</label>
                                     <div class="col-md-9">
-                                        <select class="form-control custom-select" name="<?= $campo ?>" id="<?= $campo ?>">
+                                        <select class="form-control custom-select cidade" name="<?= $campo ?>" id="<?= $campo ?>">
                                             <option value="0">Selecione</option>
                                             <?php foreach($cidades as $cidade){ ?>
                                                 <option value="<?= $cidade["codigo_cid"] ?>" <?= ($cidade["codigo_cid"] == 5148 ? 'selected' : '') ?>><?= $cidade["nome_cid"] ?></option>

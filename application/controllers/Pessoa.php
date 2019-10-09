@@ -56,6 +56,8 @@ class Pessoa extends CI_Controller {
                 unset($dados['codigo_' . $this->prefixo]);
                 unset($dados['codigo_est']);
 
+                $dados['data_pes'] = data_completa($dados['data_pes'], 3);
+
                 if(intval($codigo) === 0) {
                     $dados["ativo_" . $this->prefixo] = 1;
                     $retorno = $this->crud->inserir($this->tabela, $dados);
@@ -82,7 +84,12 @@ class Pessoa extends CI_Controller {
         $condicao = $this->input->post('condicao');
         $valor = $this->input->post('valor');
 
-        $query  = "SELECT x.*, t.descricao_tpi FROM " . $this->tabela . " x INNER JOIN tipo_imovel t ON t.codigo_tpi = x.codigo_tpi WHERE x.ativo_" . $this->prefixo . " = 1";
+        $query = "SELECT p.*, c.nome_cid, e.uf_est
+                    FROM pessoa p
+                    INNER JOIN cidades c ON c.codigo_cid = p.codigo_cid
+                    INNER JOIN estados e ON e.codigo_est = c.codigo_est
+                    WHERE ativo_pes = 1";
+
         $query .= $condicao == "" ? "" : " AND " . $condicao . " like '%" . $valor . "%'";
 
         $dados = $this->crud->busca_livre($query);
@@ -96,7 +103,14 @@ class Pessoa extends CI_Controller {
 
     public function buscar_registro() {
         $codigo = $this->input->post('codigo');
-        $dados  = $this->crud->buscar("*", $this->tabela, "ativo_" . $this->prefixo . " = 1 AND codigo_" . $this->prefixo . " = " . $codigo);
+
+        $query = "SELECT p.*, c.nome_cid, e.uf_est
+                    FROM pessoa p
+                    INNER JOIN cidades c ON c.codigo_cid = p.codigo_cid
+                    INNER JOIN estados e ON e.codigo_est = c.codigo_est
+                    WHERE codigo_pes = {$codigo}";
+
+        $dados = $this->crud->busca_livre($query);
 
         if($dados) {
             echo json_encode(array('retorno' => true, 'dados' => $dados));
@@ -111,5 +125,22 @@ class Pessoa extends CI_Controller {
         } else {
             echo json_encode(array('retorno' => false));
         }
+    }
+
+    public function buscar_cidades(){
+
+        $dados = $this->input->post();
+
+        if(!empty($dados)){
+
+            $query = "SELECT c.nome_cid, c.codigo_cid FROM cidades c INNER JOIN estados e On e.codigo_est = c.codigo_est WHERE e.uf_est = '{$dados['estado']}' ORDER BY c.nome_cid ASC";
+
+            $r = $this->crud->busca_livre($query);
+
+            echo json_encode(array('retorno' => true, 'dados' => $r));
+        }else{
+            echo json_encode(array('retorno' => false));
+        }
+
     }
 }

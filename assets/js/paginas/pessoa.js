@@ -19,7 +19,63 @@ $(document).ready(function(){
                 validating: 'fa fa-trash-o'
             },
             fields: {
-                descricao_esp: {
+                nome_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                telefone_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                data_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                cep_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                logradouro_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                numero_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                bairro_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                codigo_est: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                codigo_cid: {
                     validators: {
                         notEmpty: {
                             message: 'campo obrigatório'
@@ -61,8 +117,14 @@ $(document).ready(function(){
                 retorno_mensagem("Houve um erro com a conexão, tente novamente!", 'erro');
             }
         });
-    })
+    });
 
+    $(".numero").blur(function(){
+        $('#form-modal-cadastro').formValidation('revalidateField', 'logradouro_pes')
+                                                    .formValidation('revalidateField', 'bairro_pes')
+                                                    .formValidation('revalidateField', 'codigo_cid')
+                                                    .formValidation('revalidateField', 'codigo_est');
+    });
 });
 
 $(document).on('click', '.btn-alterar', function(){
@@ -99,7 +161,7 @@ $(document).on('click', '.btn-excluir', function(){
 
                     if(data.retorno){
                         buscar();
-                        swal("Excluido!", "success");
+                        swal("Excluído!");
                     }else{
                         retorno_mensagem("Houve algum erro!", 'Erro');
                     }
@@ -171,15 +233,13 @@ function monta_tabela(dados){
             html = "";
 
             for (var i = 0; i < tam; i++) {
-                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
-
-                var tipo = parseInt(dados[i].tipo_esp) === 0 ? "Sim/Não" : "Campo Livre";
+                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_pes + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_pes + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
                 html += "<tr>" +
-                            "<td>" + dados[i].descricao_tpi + "</td>" +
-                            "<td class='col_nome_" + dados[i].codigo_esp + "'>" + dados[i].descricao_esp + "</td>" +
-                            "<td>" + tipo + "</td>" +
+                            "<td class='col_nome_" + dados[i].codigo_pes + "'>" + dados[i].nome_pes + " " + dados[i].sobrenome_pes + "</td>" +
+                            "<td>" + dados[i].telefone_pes + "</td>" +
+                            "<td>" + dados[i].nome_cid + " - " + dados[i].uf_est + "</td>" +
                             "<td>" + alterar + excluir + "</td>" +
                         "</tr>";
             }
@@ -189,8 +249,19 @@ function monta_tabela(dados){
 }
 
 function preenche_campos(dados){
-    $("#codigo_esp").val(dados[0].codigo_esp);
-    $("#codigo_tpi").val(dados[0].codigo_tpi);
-    $("#descricao_esp").val(dados[0].descricao_esp);
-    $("#tipo_esp").val(dados[0].tipo_esp);
+    var codigo_est = dados[0].uf_est;
+    $("#codigo_est").val(codigo_est);
+    buscar_cidade(dados[0].nome_cid, codigo_est);
+
+    $("#codigo_pes").val(dados[0].codigo_pes);
+    $("#nome_pes").val(dados[0].nome_pes);
+    $("#sobrenome_pes").val(dados[0].sobrenome_pes);
+    $("#telefone_pes").val(dados[0].telefone_pes);
+    $("#email_pes").val(dados[0].email_pes);
+    $("#cep_pes").val(dados[0].cep_pes);
+    $("#logradouro_pes").val(dados[0].logradouro_pes);
+    $("#numero_pes").val(dados[0].numero_pes);
+    $("#bairro_pes").val(dados[0].bairro_pes);
+    $("#complemento_pes").val(dados[0].complemento_pes);
+    $("#data_pes").val(toDateBR(dados[0].data_pes));
 }
