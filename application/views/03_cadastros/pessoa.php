@@ -1,65 +1,65 @@
 <input type="hidden" id="pagina" value="<?= $tabela ?>" />
 
-<div class="row page-titles">
-    <!--<div class="col-md-5 col-8 align-self-center">
-        <h3 class="text-themecolor">Dashboard</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-    </div>
-    <div class="col-md-7 col-4 align-self-center">
-        <div class="d-flex m-t-10 justify-content-end">
-            <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                <div class="chart-text m-r-10">
-                    <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                    <h4 class="m-t-0 text-info">$58,356</h4>
-                </div>
-            </div>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-content-save"></i>
+                </span> <?= $nome_pagina ?> 
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <div class="acoes-botoes">
+                            <button type="button" id="btn-novo" class="btn btn-danger waves-effect waves-light">Novo</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </div>-->
-</div>
 
-
-<div class="row">
-    <div class="col-12">
-        <div class="card ">
-            <div class="card-body card-body-interno">
-                <div class="ribbon ribbon-default ribbon-titulo-interno"><?= $nome_pagina ?></div>
-                <div class="acoes-botoes">
-                    <button type="button" id="btn-novo" class="btn btn-danger waves-effect waves-light"><span class="btn-label"><i class="fa fa-save"></i></span>Novo</button>
-                </div>
-                <div class="table-responsive m-t-40">
-                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody id="dados-tabela">
-                            <?php if(!empty($consulta)){
-                                foreach($consulta as $cada){ 
-                                    
-                                    $detalhar = verificar_acao($tabela, "detalhar") ? ' <button class="btn-historico btn btn-info btn-acoes" data-toggle="tooltip" data-placement="top" title="Histórico" data-original-title="Histórico" data-codigo="' . $cada['codigo_pes'] . '" data-nome="' . $cada['nome_pes'] . '"><i class="mdi mdi-all-inclusive"></i></button>' : '';
-                                    $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_pes'] . '"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                                    $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_pes'] . '"><i class="mdi mdi-delete-forever"></i></button>' : '';
-
-                                    ?>
+        <div class="page-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card ">
+                        <div class="card-body card-body-interno">
+                            <div class="table-responsive m-t-40">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
                                     <tr>
-                                        <td class='col_nome_<?= $cada["codigo_pes"] ?>'><?= $cada["nome_pes"] ?></td>
-                                        <td><?= $cada["telefone_pes"] ?></td>
-                                        <td><?= $detalhar . $alterar . $excluir ?></td>
+                                        <th>Nome</th>
+                                        <th>Telefone</th>
+                                        <th>Cidade/UF</th>
+                                        <th>Ações</th>
                                     </tr>
-                            <?php } } ?>
-                        </tbody>
-                    </table>
+                                    </thead>
+                                    <tbody id="dados-tabela">
+                                        <?php if(!empty($consulta)){
+                                            foreach($consulta as $cada){ 
+                                                
+                                                $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_pes'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                                                $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_pes'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
+
+                                                ?>
+                                                <tr>
+                                                    <td class='col_nome_<?= $cada["codigo_pes"] ?>'><?= $cada["nome_pes"] . ' ' . $cada['sobrenome_pes'] ?></td>
+                                                    <td><?= $cada["telefone_pes"] ?></td>
+                                                    <td><?= $cada["nome_cid"] . ' - ' . $cada["uf_est"] ?></td>
+                                                    <td><?= $alterar . $excluir ?></td>
+                                                </tr>
+                                        <?php } } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="modal-cadastro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -93,26 +93,6 @@
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Telefone</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control celular" name="<?= $campo ?>" id="<?= $campo ?>" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <?php $campo = "responsavel_pes"; ?>
-                                    <label for="<?= $campo ?>" class="control-label text-left col-md-3">Responsável</label>
-                                    <div class="col-md-9">
-                                        <select id="<?= $campo ?>" name="<?= $campo ?>" class="form-control" data-live-search="true">
-                                            <?php if(!empty($consulta)){ ?>
-                                                <option value="0">Selecione</option>
-                                                <?php foreach($consulta as $cada){ ?>
-                                            <option value="<?= $cada['codigo_pes'] ?>"><?= $cada['nome_pes'] ?></option>
-                                            <?php } }else{ ?>
-                                                <option value="0">Nenhum Cliente Cadastrado!</option>
-                                            <?php } ?>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +135,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group row">
-                                    <?php $campo = "cep_pes"; ?>
+                                    <?php $campo = "logradouro_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Logradouro</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
@@ -167,7 +147,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <?php $campo = "cep_pes"; ?>
+                                    <?php $campo = "numero_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Nº</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
@@ -177,7 +157,7 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <?php $campo = "cep_pes"; ?>
+                                    <?php $campo = "bairro_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Bairro</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
@@ -189,7 +169,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row">
-                                    <?php $campo = "cep_pes"; ?>
+                                    <?php $campo = "complemento_pes"; ?>
                                     <label for="<?= $campo ?>" class="control-label text-left col-md-3">Complemento</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="<?= $campo ?>" id="<?= $campo ?>" />
