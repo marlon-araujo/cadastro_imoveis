@@ -55,3 +55,48 @@ function verificar_acao(pagina, acao) {
 function accBr(valor) {
     return accounting.formatMoney(valor, "", 2, ".", ",");
 }
+
+function formata_moeda(i) {
+	var v = i.value.replace(/\D/g,'');
+	v = (v/100).toFixed(2) + '';
+	v = v.replace(".", ",");
+	v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+	v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+	i.value = v;
+}
+
+function formata_taxa(i) {
+	var v = i.value.replace(/\D/g,'');
+	v = (v/100).toFixed(2) + '';
+	//v = v.replace(".", ".");
+	v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+	v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+	i.value = v;
+}
+
+function toDateBR(data){
+    if(data !== "" && data !== null && data !== undefined){
+        var arr = data.split('-');
+        return arr[2] + '/' + arr[1] + '/' + arr[0];
+    }
+    return '---';
+}
+
+$(document).ready(function(){
+
+    //$("#example23").DataTable();
+    
+    $(".moeda").keyup(function(){
+        var valor = formata_moeda($(this).val());
+        $(this).val(valor);
+    });
+    
+    $(".cep").mask("99999-999"); 
+    $(".cpf").mask("999.999.999-99");
+    $(".data").mask("99/99/9999");
+    $(".celular").mask("(99)99999-9999");
+    $(".telefone").mask("(99) 9999-9999");
+    $(".data_hora").mask("99/99/9999 99:99:99");
+    $(".hora").mask("99:99");
+    $(".cnpj").mask("99.999.999/9999-99");
+});
