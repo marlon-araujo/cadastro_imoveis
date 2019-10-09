@@ -99,4 +99,76 @@ $(document).ready(function(){
     $(".data_hora").mask("99/99/9999 99:99:99");
     $(".hora").mask("99:99");
     $(".cnpj").mask("99.999.999/9999-99");
+
+    $(".cep").blur(function() {
+        var cep = $(this).val().replace(/\D/g, '');
+
+        if (cep != "") {
+            var validacep = /^[0-9]{8}$/;
+
+            if(validacep.test(cep)) {
+                $(".logradouro").val("...");
+                $(".bairro").val("...");
+
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+
+                    if (!("erro" in dados)) {
+                        $(".logradouro").val(dados.logradouro);
+                        $(".bairro").val(dados.bairro);
+                        $(".estado").val(dados.uf);
+                        $(".numero").focus();
+
+                        buscar_cidade(dados.localidade, dados.uf);
+
+                        $('#form-modal-cadastro').formValidation('revalidateField', 'logradouro_pes')
+                                                    .formValidation('revalidateField', 'bairro_pes')
+                                                    .formValidation('revalidateField', 'codigo_cid')
+                                                    .formValidation('revalidateField', 'codigo_est');
+                    } else {
+                        limpa_formulario_cep();
+                    }
+                });
+            } else {
+                limpa_formulario_cep();
+            }
+        } else {
+            limpa_formulario_cep();
+        }
+    });
+
+    $(".estado").change(function(){
+        buscar_cidade('', $(this).val());
+    });
 });
+
+function buscar_cidade(localidade, uf){
+    $.ajax({
+        url: base_url + 'pessoa/buscar_cidades',
+        type: 'POST',
+        data: {cidade: localidade, estado: uf},
+        dataType : 'json',
+        success: function(data) {
+            if(data.retorno){
+                var dados = data.dados;
+                var html = "";
+                for(var i = 0, tam = dados.length; i < tam; i++){
+                    var select = dados[i].nome_cid === localidade ? 'selected' : '';
+                    html += "<option value='" + dados[i].codigo_cid + "' " + select + ">" + dados[i].nome_cid + "</option>";
+                }
+                $(".cidade").html(html);
+            }else{
+
+            }
+        }
+    });
+}
+
+function limpa_formulario_cep() {
+    $(".logradouro").val("");
+    $(".bairro").val("");
+    $(".numero").val("");
+    $(".cep").val("");
+    $(".complemento").val("");
+    $(".estado").val(0);
+    $(".cidade").html('<option value="0">Selecione um Estado</option>');
+}
