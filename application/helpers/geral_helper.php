@@ -174,9 +174,14 @@ if(!function_exists('data_completa')) {
         $dia_semana_completo = array('DOMINGO', 'SEGUNDA', 'TERÇA', 'QUARTA', 'QUINTA', 'SEXTA', 'SÁBADO');
         $dia_semana_abreviado = array('DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB');
 
-        $data_usa = explode("-", $data);
+        if(strpos($data, '-')){
+            $data = explode("-", $data);
+        }else{
+            $data = explode("/", $data);
+        }
+        
 
-        $mes_numero = intval($data_usa[1]);
+        $mes_numero = intval($data[1]);
         $mes = !empty($tipo_mes) ? $tipo_mes == 1 ? $mes_nome_abreviado[$mes_numero] : $mes_nome_completo[$mes_numero] : "";
 
         switch ($retorno){
@@ -185,15 +190,15 @@ if(!function_exists('data_completa')) {
                     $mes = $mes_nome_completo[$mes_numero];
                 }
 
-                return $data_usa[2] . " DE " . $mes . " DE " . $data_usa[0];
+                return $data[2] . " DE " . $mes . " DE " . $data[0];
                 break;
 
             case 2:
-                return $data_usa[2] . "/" . $data_usa[1] . "/" . $data_usa[0];
+                return $data[2] . "/" . $data[1] . "/" . $data[0];
                 break;
 
             case 3:
-                return $data_usa[0] . "-" . $data_usa[1] . "-" . $data_usa[2];
+                return $data[2] . "-" . $data[1] . "-" . $data[0];
                 break;
 
             case 4:
@@ -201,11 +206,11 @@ if(!function_exists('data_completa')) {
                     $mes = $mes_nome_abreviado[$mes_numero];
                 }
 
-                return $data_usa[2] . " " . $mes . " " . $data_usa[0];
+                return $data[2] . " " . $mes . " " . $data[0];
                 break;
 
             case 5:
-                return $data_usa[2];
+                return $data[2];
                 break;
 
             case 6:
@@ -217,7 +222,7 @@ if(!function_exists('data_completa')) {
                 break;
 
             case 7:
-                return $data_usa[0];
+                return $data[0];
                 break;
 
             case 8:
@@ -231,7 +236,7 @@ if(!function_exists('data_completa')) {
                     $mes = $mes_nome_completo[$mes_numero];
                 }
 
-                return $data_usa[2] . " DE " . $mes . " DE " . $data_usa[0];
+                return $data[2] . " DE " . $mes . " DE " . $data[0];
                 break;
         }
 
