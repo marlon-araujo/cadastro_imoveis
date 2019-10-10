@@ -3,9 +3,8 @@ var pagina = $("#pagina").val();
 $(document).ready(function(){
 
     $("#btn-novo").click(function(){
-        $("#codigo_esp").val(0);
+        $("#codigo_imo").val(0);
         $("#codigo_tpi").val(0);
-        $("#tipo_esp").val(0);
         $('#form-modal-cadastro').formValidation('resetForm', true);
         $("#modal-cadastro").modal('show');
     });
@@ -19,7 +18,63 @@ $(document).ready(function(){
                 validating: 'fa fa-trash-o'
             },
             fields: {
-                descricao_esp: {
+                codigo_tpi: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                codigo_pes: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                valor_imo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                cep_imo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                logradouro_imo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                numero_imo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                bairro_imo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                codigo_est: {
+                    validators: {
+                        notEmpty: {
+                            message: 'campo obrigatório'
+                        }
+                    }
+                },
+                codigo_cid: {
                     validators: {
                         notEmpty: {
                             message: 'campo obrigatório'
@@ -61,14 +116,20 @@ $(document).ready(function(){
                 retorno_mensagem("Houve um erro com a conexão, tente novamente!", 'erro');
             }
         });
-    })
+    });
 
+    $(".numero").blur(function(){
+        $('#form-modal-cadastro').formValidation('revalidateField', 'logradouro_pes')
+                                                    .formValidation('revalidateField', 'bairro_pes')
+                                                    .formValidation('revalidateField', 'codigo_cid')
+                                                    .formValidation('revalidateField', 'codigo_est');
+    });
 });
 
 $(document).on('click', '.btn-alterar', function(){
     mostrar_carregando();
     var codigo = $(this).data('codigo');
-    $("#codigo_esp").val(codigo);
+    $("#codigo_imo").val(codigo);
     buscar_registro(codigo);
 });
 
@@ -171,15 +232,13 @@ function monta_tabela(dados){
             html = "";
 
             for (var i = 0; i < tam; i++) {
-                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_esp + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
-
-                var tipo = parseInt(dados[i].tipo_esp) === 0 ? "Sim/Não" : "Campo Livre";
+                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
                 html += "<tr>" +
+                            "<td class='col_nome_" + dados[i].codigo_imo + "'>" + dados[i].nome_pes + "</td>" +
                             "<td>" + dados[i].descricao_tpi + "</td>" +
-                            "<td class='col_nome_" + dados[i].codigo_esp + "'>" + dados[i].descricao_esp + "</td>" +
-                            "<td>" + tipo + "</td>" +
+                            "<td>R$ " + accBr(dados[i].valor_imo) + "</td>" +
                             "<td>" + alterar + excluir + "</td>" +
                         "</tr>";
             }
@@ -189,8 +248,20 @@ function monta_tabela(dados){
 }
 
 function preenche_campos(dados){
-    $("#codigo_esp").val(dados[0].codigo_esp);
+    var codigo_est = dados[0].uf_est;
+    $("#codigo_est").val(codigo_est);
+    buscar_cidade(dados[0].nome_cid, codigo_est);
+
+    $("#codigo_imo").val(dados[0].codigo_imo);
+    $("#cep_imo").val(dados[0].cep_imo);
+    $("#logradouro_imo").val(dados[0].logradouro_imo);
+    $("#numero_imo").val(dados[0].numero_imo);
+    $("#bairro_imo").val(dados[0].bairro_imo);
+    $("#complemento_imo").val(dados[0].complemento_imo);
+
+    $("#valor_imo").val(moeda(dados[0].valor_imo));
+    $("#codigo_pes").val(dados[0].codigo_pes);
     $("#codigo_tpi").val(dados[0].codigo_tpi);
-    $("#descricao_esp").val(dados[0].descricao_esp);
-    $("#tipo_esp").val(dados[0].tipo_esp);
+    $("#numeromatricula_imo").val(dados[0].numeromatricula_imo);
+    $("#cadastromunicipal_imo").val(dados[0].cadastromunicipal_imo);
 }
