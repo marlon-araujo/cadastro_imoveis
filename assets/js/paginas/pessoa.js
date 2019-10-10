@@ -3,9 +3,8 @@ var pagina = $("#pagina").val();
 $(document).ready(function(){
 
     $("#btn-novo").click(function(){
-        $("#codigo_esp").val(0);
+        $("#codigo_pes").val(0);
         $("#codigo_tpi").val(0);
-        $("#tipo_esp").val(0);
         $('#form-modal-cadastro').formValidation('resetForm', true);
         $("#modal-cadastro").modal('show');
     });
@@ -130,7 +129,7 @@ $(document).ready(function(){
 $(document).on('click', '.btn-alterar', function(){
     mostrar_carregando();
     var codigo = $(this).data('codigo');
-    $("#codigo_esp").val(codigo);
+    $("#codigo_pes").val(codigo);
     buscar_registro(codigo);
 });
 
