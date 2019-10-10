@@ -172,3 +172,86 @@ function limpa_formulario_cep() {
     $(".estado").val(0);
     $(".cidade").html('<option value="0">Selecione um Estado</option>');
 }
+
+function mascara(o, f){
+    v_obj = o;
+    v_fun = f;
+    setTimeout("execmascara()", 1);
+}
+    
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value);
+}
+    
+function leech(v){
+    v = v.replace(/o/gi,"0");
+    v = v.replace(/i/gi,"1");
+    v = v.replace(/z/gi,"2");
+    v = v.replace(/e/gi,"3");
+    v = v.replace(/a/gi,"4");
+    v = v.replace(/s/gi,"5");
+    v = v.replace(/t/gi,"7");
+    return v;
+}
+    
+function soNumeros(v){
+    return v.replace(/\D/g,"");
+}
+    
+function telefone(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/^(\d\d)(\d)/g,"($1) $2");
+    v = v.replace(/(\d{4})(\d)/,"$1 - $2");
+    return v;
+}
+    
+function cpf(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/(\d{3})(\d)/,"$1.$2");
+    v = v.replace(/(\d{3})(\d)/,"$1.$2");
+    v = v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+    return v;
+}
+    
+function cep(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/(\d{2})(\d)/,"$1.$2");
+    v = v.replace(/(\d{3})(\d{1,3})$/,"$1-$2");
+    return v;
+}
+    
+function cnpj(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/^(\d{2})(\d)/,"$1.$2");
+    v = v.replace(/^(\d{2}).(\d{3})(\d)/,"$1.$2.$3");
+    v = v.replace(/.(\d{3})(\d)/,".$1/$2");
+    v = v.replace(/(\d{4})(\d)/,"$1-$2");
+    return v;
+}
+    
+function romanos(v){
+    v = v.toUpperCase();
+    v = v.replace(/[^IVXLCDM]/g,"");
+    while(v.replace(/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/,"")!="");
+    v = v.replace(/.$/,"");
+    return v;
+}
+    
+function data(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/^(\d{2})(\d)/,"$1/$2");
+    v = v.replace(/.(\d{2})(\d)/,".$1/$2");
+    v = v.replace(/(\d{2})(\d)/,"$1/$2");
+    return v;
+}
+    
+function moeda(v){
+    v = v.replace(/\D/g,"");
+    v = v.replace(/(\d{1})(\d{15})$/,"$1.$2");
+    v = v.replace(/(\d{1})(\d{11})$/,"$1.$2");
+    v = v.replace(/(\d{1})(\d{8})$/,"$1.$2");
+    v = v.replace(/(\d{1})(\d{5})$/,"$1.$2");
+    v = v.replace(/(\d{1})(\d{1,2})$/,"$1,$2");
+    return v;
+}
+    
