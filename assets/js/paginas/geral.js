@@ -1,11 +1,11 @@
 var base_url = $("#base_url").val();
 
 function mostrar_carregando(){
-
+    $(".carregando").show();
 }
 
 function fechar_carregando(){
-    
+    $(".carregando").hide();
 }
 
 function retorno_mensagem(mensagem, tipo) {
