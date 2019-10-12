@@ -120,9 +120,9 @@ $(document).ready(function(){
 
     $(".numero").blur(function(){
         $('#form-modal-cadastro').formValidation('revalidateField', 'logradouro_pes')
-                                                    .formValidation('revalidateField', 'bairro_pes')
-                                                    .formValidation('revalidateField', 'codigo_cid')
-                                                    .formValidation('revalidateField', 'codigo_est');
+                                 .formValidation('revalidateField', 'bairro_pes')
+                                 .formValidation('revalidateField', 'codigo_cid')
+                                 .formValidation('revalidateField', 'codigo_est');
     });
 });
 
@@ -131,6 +131,64 @@ $(document).on('click', '.btn-alterar', function(){
     var codigo = $(this).data('codigo');
     $("#codigo_imo").val(codigo);
     buscar_registro(codigo);
+});
+
+$(document).on('click', '.btn-detalhes', function(){
+    mostrar_carregando();
+    var codigo = $(this).data('codigo');
+    var codigo_tpi = $(this).data('codigo_tpi');
+
+    $("#codigo_imovel_especificacoes").val(codigo);
+
+    //buscar as especificações
+    $.ajax({
+        url: base_url + 'imovel/buscar_especificacoes',
+        type: 'POST',
+        data: {codigo_tpi: codigo_tpi},
+        dataType : 'json',
+        success: function(data) {
+            if(data.retorno){
+                //montar campos
+                var html = '';
+
+                for(var i = 0, tam = data.dados.length; i < tam; i++){
+
+                    html += '<div class="row">' +
+                                '<div class="col-md-12">' +
+                                    '<div class="form-group row">' +
+                                        '<label for="campo_' + i + '" class="control-label text-left col-md-12">' + data.dados[i].descricao_esp + '</label>' +
+                                        '<div class="col-md-12">';
+
+                                        if(parseInt(data.dados[i].tipo_esp) === 1){
+                                            html += '<input type="text" class="form-control" name="esp[]" id="campo_' + i + '" />';
+                                        }else{
+                                            html += '<select class="form-control" name="esp[]" id="campo_' + i + '">' +
+                                                        '<option value="0">Não</option>' +
+                                                        '<option value="1">Sim</option>' +
+                                                    '</select>';
+                                        }
+                                            
+                                    html += '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>';
+                }
+
+                $("#div-campos-dinamicos").html(html);
+
+                
+
+
+                //buscar especificações salvas
+
+                
+                $("#modal-detalhes").modal('show');
+                fechar_carregando();
+            }
+        }
+    });
+
+    
 });
 
 $(document).on('click', '.btn-excluir', function(){
@@ -232,8 +290,10 @@ function monta_tabela(dados){
             html = "";
 
             for (var i = 0; i < tam; i++) {
-                var alterar = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                var excluir = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
+                var fotos    = verificar_acao(pagina, "alterar") ? ' <button class="btn-fotos btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Fotos" data-original-title="Fotos" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-lead-camera"></i></button>' : '';
+                var detalhes = verificar_acao(pagina, "alterar") ? ' <button class="btn-detalhes btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Detalhes" data-original-title="Detalhes" data-codigo="' + dados[i].codigo_imo + '" data-codigo_tpi="' + dados[i].codigo_tpi + '" style="padding: 5px;"><i class="mdi mdi-bulletin-board"></i></button>' : '';
+                var alterar  = verificar_acao(pagina, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                var excluir  = verificar_acao(pagina, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' + dados[i].codigo_imo + '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
 
                 html += "<tr>" +
                             "<td class='col_nome_" + dados[i].codigo_imo + "'>" + dados[i].nome_pes + "</td>" +

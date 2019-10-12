@@ -37,14 +37,16 @@
                                     <tbody id="dados-tabela">
                                         <?php if(!empty($consulta)){
                                             foreach($consulta as $cada){ 
-                                                $alterar = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_imo'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
-                                                $excluir = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_imo'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
+                                                $fotos          = verificar_acao($tabela, "alterar") ? ' <button class="btn-fotos btn btn-info btn-acoes" data-toggle="tooltip" data-placement="top" title="Fotos" data-original-title="Fotos" data-codigo="' . $cada['codigo_imo'] . '" style="padding: 5px;"><i class="mdi mdi-camera"></i></button>' : '';
+                                                $especificacoes = verificar_acao($tabela, "alterar") ? ' <button class="btn-detalhes btn btn-warning btn-acoes" data-toggle="tooltip" data-placement="top" title="Detalhes" data-original-title="Detalhes" data-codigo="' . $cada['codigo_imo'] . '"  data-codigo_tpi="' . $cada['codigo_tpi'] . '" style="padding: 5px;"><i class="mdi mdi-bulletin-board"></i></button>' : '';
+                                                $alterar        = verificar_acao($tabela, "alterar") ? ' <button class="btn-alterar btn btn-success btn-acoes" data-toggle="tooltip" data-placement="top" title="Alterar" data-original-title="Alterar" data-codigo="' . $cada['codigo_imo'] . '" style="padding: 5px;"><i class="mdi mdi-lead-pencil"></i></button>' : '';
+                                                $excluir        = verificar_acao($tabela, "excluir") ? ' <button class="btn-excluir btn btn-danger btn-acoes" data-toggle="tooltip" data-placement="top" title="Excluir" data-original-title="Excluir" data-codigo="' . $cada['codigo_imo'] . '" style="padding: 5px;"><i class="mdi mdi-delete-forever"></i></button>' : '';
                                                 ?>
                                                 <tr>
                                                     <td class='col_nome_<?= $cada["codigo_imo"] ?>'><?= $cada["nome_pes"] . ' ' . $cada["sobrenome_pes"] ?></td>
                                                     <td><?= $cada['descricao_tpi'] ?></td>
                                                     <td>R$ <?= number_format($cada['valor_imo'], 2, ',', '.') ?></td>
-                                                    <td><?= $alterar . $excluir ?></td>
+                                                    <td><?= $fotos . $especificacoes . $alterar . $excluir ?></td>
                                                 </tr>
                                         <?php } } ?>
                                     </tbody>
@@ -229,6 +231,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger waves-effect waves-light">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modal-detalhes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Detalhes - <span id="spn-nome-modal"></span></h4>
+            </div>
+            <form id="form-modal-cadastro" action="<?= base_url($tabela . '/salvar') ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <input type="hidden" name="codigo_imo" id="codigo_imovel_especificacoes" value="0" />
+
+                    <div id="div-campos-dinamicos">
+                        
+                    </div>
+
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>

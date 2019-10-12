@@ -105,6 +105,17 @@ class Imovel extends CI_Controller {
         }
     }
 
+    public function buscar_especificacoes() {
+        $codigo = $this->input->post('codigo_tpi');
+        $dados = $this->crud->buscar('tipo_esp, descricao_esp', 'especificacoes', 'ativo_esp = 1 AND codigo_tpi = ' . $codigo);
+
+        if($dados) {
+            echo json_encode(array('retorno' => true, 'dados' => $dados));
+        } else {
+            echo json_encode(array('retorno' => false, 'mensagem' => 'Nenhum registro encontrado!'));
+        }
+    }
+
     public function buscar_registro() {
         $codigo = $this->input->post('codigo');
         $query = "SELECT i.*, p.*, c.nome_cid, e.uf_est, ti.descricao_tpi
