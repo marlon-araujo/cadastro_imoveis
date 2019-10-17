@@ -144,7 +144,10 @@ $(document).on('click', '.btn-detalhes', function(){
     $.ajax({
         url: base_url + 'imovel/buscar_especificacoes',
         type: 'POST',
-        data: {codigo_tpi: codigo_tpi},
+        data: {
+            codigo_tpi: codigo_tpi,
+            codigo_imo: codigo
+        },
         dataType : 'json',
         success: function(data) {
             if(data.retorno){
@@ -160,7 +163,7 @@ $(document).on('click', '.btn-detalhes', function(){
                                         '<div class="col-md-12">';
 
                                         if(parseInt(data.dados[i].tipo_esp) === 1){
-                                            html += '<input type="text" class="form-control" name="esp[]" id="campo_' + i + '" />';
+                                            html += '<input type="text" class="form-control" name="esp[]" id="campo_' + i + '" value="" />';
                                         }else{
                                             html += '<select class="form-control" name="esp[]" id="campo_' + i + '">' +
                                                         '<option value="0">Não</option>' +
